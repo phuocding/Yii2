@@ -65,14 +65,10 @@ class Status extends \yii\db\ActiveRecord
         }
     }
 
-    // public function beforeSave() {
-    //     if ($this->isNewRecord) {
-    //         $this->created_by = Yii::app()->user->id;
-    //         $this->updated_by = Yii::app()->user->id;
-    //     } else {
-    //         $this->modified_by = Yii::app()->user->id;
-    //     }
-
-    //     return parent::beforeSave();
-    // }
+    /**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getCreatedBy() {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
 }
