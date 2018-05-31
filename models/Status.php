@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-// use Yii;
+use Yii;
 
 /**
  * This is the model class for table "status".
@@ -10,15 +10,11 @@ namespace app\models;
  * @property int $id
  * @property string $message
  * @property int $permissions
- * @property int $created_at
- * @property int $updated_at
+ * @property date $created_at
+ * @property date $updated_at
  */
 class Status extends \yii\db\ActiveRecord
 {
-	
-	const PERMISSIONS_PRIVATE = 10;
-	const PERMISSIONS_PUBLIC = 20;  
-	
     /**
      * {@inheritdoc}
      */
@@ -36,6 +32,7 @@ class Status extends \yii\db\ActiveRecord
             [['message', 'created_at', 'updated_at'], 'required'],
             [['message'], 'string'],
             [['permissions'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -52,16 +49,30 @@ class Status extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
-    
+
+    const PERMISSIONS_PRIVATE = 10;
+    const PERMISSIONS_PUBLIC = 20;
+
     public function getPermissions() {
-    	return array (self::PERMISSIONS_PRIVATE=>'Private',self::PERMISSIONS_PUBLIC=>'Public');
+        return array (self::PERMISSIONS_PRIVATE=>'Private',self::PERMISSIONS_PUBLIC=>'Public');
     }
-    
+
     public function getPermissionsLabel($permissions) {
-    	if ($permissions==self::PERMISSIONS_PUBLIC) {
-    		return 'Public';
-    	} else {
-    		return 'Private';
-    	}
+        if ($permissions==self::PERMISSIONS_PUBLIC) {
+            return 'Public';
+        } else {
+            return 'Private';
+        }
     }
+
+    // public function beforeSave() {
+    //     if ($this->isNewRecord) {
+    //         $this->created_by = Yii::app()->user->id;
+    //         $this->updated_by = Yii::app()->user->id;
+    //     } else {
+    //         $this->modified_by = Yii::app()->user->id;
+    //     }
+
+    //     return parent::beforeSave();
+    // }
 }

@@ -27,7 +27,25 @@ class CountryController extends Controller
 						'POST'
 					]
 				]
-			]
+			],
+			// access control
+			'access' => [
+				'class' => \yii\filters\AccessControl::className(),
+				'rules' => [
+			// allow authenticated users
+				[
+					'actions' => ['index'],
+					'allow' => true,
+				],
+
+				[
+					'actions' => ['create', 'update', 'view'],
+					'allow' => true,
+					'roles' => ['@'],
+				],
+        // everything else is defined
+				],
+			],
 		];
 	}
 
@@ -42,10 +60,10 @@ class CountryController extends Controller
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		
 		return $this->render('index',
-				[
-					'searchModel' => $searchModel,
-					'dataProvider' => $dataProvider
-				]);
+			[
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider
+			]);
 	}
 
 	/**
@@ -58,10 +76,10 @@ class CountryController extends Controller
 	public function actionView ($id)
 	{
 		return $this->render('view',
-				[
-					'model' => $this->findModel($id)
-				]);
-	}
+			[
+				'model' => $this->findModel($id)
+			]);
+			}
 
 	/**
 	 * Creates a new Country model.
@@ -76,10 +94,10 @@ class CountryController extends Controller
 		
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(
-					[
-						'view',
-						'id' => $model->code
-					]);
+				[
+					'view',
+					'id' => $model->code
+				]);
 		}
 		
 		return $this->render('create', [
@@ -102,10 +120,10 @@ class CountryController extends Controller
 		
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(
-					[
-						'view',
-						'id' => $model->code
-					]);
+				[
+					'view',
+					'id' => $model->code
+				]);
 		}
 		
 		return $this->render('update', [

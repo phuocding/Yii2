@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Countries';
-$this->params['breadcrumbs'][] = $this->title;
+$this->params ['breadcrumbs'] [] = $this->title;
 ?>
 <div class="country-index">
 
@@ -18,7 +18,18 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Country', ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
 
-    <?=GridView::widget(['dataProvider' => $dataProvider,'filterModel' => $searchModel,'columns' => [['class' => 'yii\grid\SerialColumn'],'code','name','population',['class' => 'yii\grid\ActionColumn']]]);?>
+    <?=GridView::widget([
+    	'dataProvider' => $dataProvider,
+    	'filterModel' => $searchModel,
+    	'columns' => [[
+    		'class' => 'yii\grid\SerialColumn',
+    		'header' => 'Serial'
+    	],
+    	'code',
+    	'name',
+    	'population',
+    	['class' => 'yii\grid\ActionColumn']
+    ]]);?>
     
 </div>
 

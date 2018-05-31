@@ -19,19 +19,22 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Status', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+    <?=GridView::widget ( [
+     'dataProvider' => $dataProvider,
+     'filterModel' => $searchModel,
+     'columns' => [ [
+         'class' => 'yii\grid\SerialColumn',
+         'header' => 'Serial',
+         'headerOptions' => [ 'style' => 'width:15px;text-align:center' ] ],
 
-            'id',
-            'message:ntext',
-            'permissions',
-            'created_at',
-            'updated_at',
+         'id',
+         'message:ntext',
+         'created_by',
+         'permissions',
+         'created_at',
+         'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+         ['class' => 'yii\grid\ActionColumn'],
+     ],
+ ]); ?>
 </div>

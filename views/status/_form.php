@@ -15,11 +15,11 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
 
     <?=
-    $form->field($model, 'permissions')->dropDownList($model->getPermissions(), 
-             ['prompt'=>'- Choose Your Permissions -']) ?>
+   $form->field($model, 'permissions')->dropDownList($model->getPermissions(),
+            ['prompt'=>'- Choose Your Permissions -']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Create', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
