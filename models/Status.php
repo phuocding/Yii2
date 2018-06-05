@@ -16,9 +16,12 @@ use yii\behaviors\BlameableBehavior;
  * @property int $created_by
  * @property int $updated_by
  * @property int de_code
+ * @property string de_code_name
  */
 class Status extends \yii\db\ActiveRecord
 {
+	public $de_code_name = "";
+	
     /**
      * {@inheritdoc}
      */
@@ -95,5 +98,9 @@ class Status extends \yii\db\ActiveRecord
 
     public function getPhuoc() {
         return $this->hasOne(Country::className(), ['id' => 'de_code']);
+    }
+    
+    public function getCodeName() {
+    	return $this->hasOne(Country::className(), ['code' => 'de_code_name']);
     }
 }

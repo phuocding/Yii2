@@ -58,6 +58,10 @@ class StatusController extends Controller
         $searchModel = new StatusSearch();
 
         if (Yii::$app->request) {
+        	
+        	if(Yii::$app->request->queryParams["codeName"] != ""){
+        		$searchModel->de_code_name = Yii::$app->request->queryParams["codeName"];
+        	}
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         }
 

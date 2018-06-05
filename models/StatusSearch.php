@@ -41,7 +41,9 @@ class StatusSearch extends Status
      */
     public function search($params)
     {
-    	$query = Status::find();
+    	$query = Status::find()->with('phuoc');
+//     	->leftJoin('phuoc', ['phuoc.code' => 'decode'])
+//     	->where(['like', ]);
 
         // add conditions that should always apply here
 
@@ -54,6 +56,11 @@ class StatusSearch extends Status
                 'attributes' => ['id', 'message', 'permissions', 'created_at', 'updated_at', 'created_by', 'updated_by', 'de_code'],
             ],
     	]);
+//     	if($this->de_code_name){
+//     		$query->with("code"=>[
+//     				"condition" => "Like "$this->de_code_name"
+//     		]);
+//     	};
 
     	$this->load($params);
 
