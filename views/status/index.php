@@ -13,28 +13,36 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="status-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Create Status', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?=GridView::widget ( [
-     'dataProvider' => $dataProvider,
-     'filterModel' => $searchModel,
-     'columns' => [ [
-         'class' => 'yii\grid\SerialColumn',
-         'header' => 'Serial',
-         'headerOptions' => [ 'style' => 'width:15px;text-align:center' ] ],
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        // 'filterModel' => $searchModel,
+        'columns' => [ 
+            // [
+            // 'class' => 'yii\grid\SerialColumn',
+            // 'header' => 'Serial',
+            // 'headerOptions' => [ 'style' => 'width:15px;text-align:center' ] ],
 
-         'id',
-         'message:ntext',
-         'created_by',
-         'permissions',
-         'created_at',
-         'updated_at',
+            'id',
+            'message:ntext',
+            'permissions',
+            'created_at',
+            'updated_at',
+            'created_by',
+            'updated_by',
+            'de_code' => [
+                'attribute' => 'de_code',
+                'value' => function($model){
+                    return ($model->phuoc) ? $model->phuoc->name : 'Null';
+                }
+            ],
 
-         ['class' => 'yii\grid\ActionColumn'],
-     ],
- ]); ?>
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
 </div>

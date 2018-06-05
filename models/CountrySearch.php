@@ -23,7 +23,8 @@ class CountrySearch extends Country
 			[
 				[
 					'code',
-					'name'
+					'name',
+					'message',
 				],
 				'safe'
 			],
@@ -79,7 +80,7 @@ class CountrySearch extends Country
 		
 		// grid filtering conditions
 		$query->andFilterWhere([
-			'population' => $this->population
+			'population' => $this->population,
 		]);
 		
 		$query->andFilterWhere(

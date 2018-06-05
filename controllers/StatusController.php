@@ -8,6 +8,8 @@ use app\models\StatusSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use app\models\Country;
 
 /**
  * StatusController implements the CRUD actions for Status model.
@@ -26,6 +28,24 @@ class StatusController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            // access control
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+            // allow authenticated users
+                [
+                    'actions' => ['index'],
+                    'allow' => true,
+                ],
+
+                [
+                    'actions' => ['create', 'update', 'view','delete'],
+                    'allow' => true,
+                    'roles' => ['@'],
+                ],
+        // everything else is defined
+                ],
+            ],
         ];
     }
 
@@ -36,7 +56,10 @@ class StatusController extends Controller
     public function actionIndex()
     {
         $searchModel = new StatusSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        if (Yii::$app->request) {
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -65,11 +88,21 @@ class StatusController extends Controller
     public function actionCreate()
     {
         $model = new Status();
-
+        
+        //use app\models\Country;
+        $modelData = Country::find()->all();
+        
+        //use yii\helpers\ArrayHelper;
+        $listData = ArrayHelper::map($modelData, 'id', 'code');
+        
         if ($model->load(Yii::$app->request->post())) {
-            $model->created_by = Yii::$app->user->getId();
+            // $model->created_by = Yii::$app->user->getId();
+            // $model->updated_by = Yii::$app->user->getId();
+
         	$model->created_at = date("y-m-d");
         	$model->updated_at = date("y-m-d");
+
+            
         	if ($model->save()) {
         		return $this->redirect(['view', 'id' => $model->id]);
         	}
@@ -77,6 +110,7 @@ class StatusController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+        	'listData' => $listData,
         ]);
     }
 
@@ -90,6 +124,12 @@ class StatusController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        
+        //use app\models\Country;
+        $modelData = Country::find()->all();
+        
+        //use yii\helpers\ArrayHelper;
+        $listData = ArrayHelper::map($modelData, 'id', 'code');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -97,6 +137,7 @@ class StatusController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+        	'listData' => $listData,
         ]);
     }
 

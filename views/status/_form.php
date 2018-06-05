@@ -18,6 +18,15 @@ use yii\widgets\ActiveForm;
    $form->field($model, 'permissions')->dropDownList($model->getPermissions(),
             ['prompt'=>'- Choose Your Permissions -']) ?>
 
+    <?=
+   $form->field($model, 'de_code')->dropDownList(
+   		$listData,
+        ['prompt'=>'Search...']); ?>
+
+    <!-- <?= $form->field($model, 'created_by')->textInput() ?> -->
+
+    <!-- <?= $form->field($model, 'updated_by')->textInput() ?> -->
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

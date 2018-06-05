@@ -39,7 +39,7 @@ class CountryController extends Controller
 				],
 
 				[
-					'actions' => ['create', 'update', 'view'],
+					'actions' => ['create', 'update', 'view', 'delete'],
 					'allow' => true,
 					'roles' => ['@'],
 				],
@@ -57,7 +57,9 @@ class CountryController extends Controller
 	public function actionIndex ()
 	{
 		$searchModel = new CountrySearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		if (Yii::$app->request) {
+			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		}
 		
 		return $this->render('index',
 			[
@@ -96,7 +98,7 @@ class CountryController extends Controller
 			return $this->redirect(
 				[
 					'view',
-					'id' => $model->code
+					'id' => $model->id
 				]);
 		}
 		

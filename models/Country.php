@@ -41,9 +41,40 @@ class Country extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id' => 'Serial',
             'code' => 'Code',
             'name' => 'Name',
             'population' => 'Population',
+            // 'status' => 'Status',
         ];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCode() {
+        return $this->code;
+    }
+
+    // public function getStatuses() {
+    //     return $this->hasMany(Status::className(), ['id' => 'status']);
+    // }
+
+    // public function getMessageList() {
+    //     $arrMessages = [];
+    //     $statusMessage = $this->statuses;
+
+    //     foreach ($statusMessage as $messageValue) {
+    //         $arrMessages = $messageValue->status;
+    //     }
+
+    //     return $arrMessages;
+    // }
 }

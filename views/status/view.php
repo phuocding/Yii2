@@ -33,6 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'permissions',
             'created_at',
             'updated_at',
+            'created_by',
+            'updated_by',
+            'de_code' => [
+                'attribute' => 'de_code',
+                'value' => function($model){
+                   
+                    return ($model->phuoc) ? $model->phuoc->name : 'null';
+                }
+            ],
         ],
     ]) ?>
 
