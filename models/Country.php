@@ -13,6 +13,8 @@ namespace app\models;
  */
 class Country extends \yii\db\ActiveRecord
 {
+// 	public $status = "";
+	
     /**
      * {@inheritdoc}
      */
@@ -45,7 +47,7 @@ class Country extends \yii\db\ActiveRecord
             'code' => 'Code',
             'name' => 'Name',
             'population' => 'Population',
-            // 'status' => 'Status',
+            'status' => 'Status',
         ];
     }
 
@@ -63,18 +65,8 @@ class Country extends \yii\db\ActiveRecord
         return $this->code;
     }
 
-    // public function getStatuses() {
-    //     return $this->hasMany(Status::className(), ['id' => 'status']);
-    // }
-
-    // public function getMessageList() {
-    //     $arrMessages = [];
-    //     $statusMessage = $this->statuses;
-
-    //     foreach ($statusMessage as $messageValue) {
-    //         $arrMessages = $messageValue->status;
-    //     }
-
-    //     return $arrMessages;
-    // }
+    public function getStatuses() {
+        return $this->hasMany(Status::className(), ['de_code' => 'id']);
+    }
+    
 }

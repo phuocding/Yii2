@@ -30,13 +30,12 @@ $this->params ['breadcrumbs'] [] = $this->title;
     	'code',
     	'name',
     	'population',
-        // 'status' => [
-        //     'attribute' => 'status',
-        //     'value' => function($model) {
-        //         $statuses = $model->getMessageList();
-        //         return ($statuses) ? implode($statuses, ", ") : 'Null';
-        //     }
-        // ],
+        [
+            'attribute' => 'status',
+            'value' => function($model) {
+            return ($model->statuses) ? implode(\yii\helpers\ArrayHelper::map($model->statuses, 'message', 'message'), " ") : 'NO MESSAGE';
+            }
+        ],
     	['class' => 'yii\grid\ActionColumn'],
     ]]); ?>
     

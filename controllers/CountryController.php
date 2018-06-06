@@ -57,6 +57,7 @@ class CountryController extends Controller
 	public function actionIndex ()
 	{
 		$searchModel = new CountrySearch();
+		
 		if (Yii::$app->request) {
 			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		}
@@ -64,7 +65,7 @@ class CountryController extends Controller
 		return $this->render('index',
 			[
 				'searchModel' => $searchModel,
-				'dataProvider' => $dataProvider
+				'dataProvider' => $dataProvider,
 			]);
 	}
 
@@ -103,7 +104,7 @@ class CountryController extends Controller
 		}
 		
 		return $this->render('create', [
-			'model' => $model
+			'model' => $model,
 		]);
 	}
 

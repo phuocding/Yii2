@@ -56,7 +56,8 @@ class CountrySearch extends Country
 	 */
 	public function search ($params)
 	{
-		$query = Country::find();
+		$query = Country::find()
+		->with('statuses');
 		
 		// add conditions that should always apply here
 		
@@ -64,8 +65,7 @@ class CountrySearch extends Country
 				[
 					'query' => $query,
 					'pagination' => [
-						'pageSize' => isset(
-								Yii::$app->params['defaultPageSize']) ? Yii::$app->params['defaultPageSize'] : 6
+						'pageSize' => 6,
 					]
 				]);
 		

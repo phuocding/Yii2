@@ -20,7 +20,7 @@ use yii\behaviors\BlameableBehavior;
  */
 class Status extends \yii\db\ActiveRecord
 {
-	public $de_code_name = "";
+// 	public $de_code_name = "";
 	
     /**
      * {@inheritdoc}
@@ -100,7 +100,7 @@ class Status extends \yii\db\ActiveRecord
         return $this->hasOne(Country::className(), ['id' => 'de_code']);
     }
     
-    public function getCodeName() {
-    	return $this->hasOne(Country::className(), ['code' => 'de_code_name']);
-    }
+//     public function getCodeName() {
+//     	return $this->hasOne(Country::className(), ['code' => 'de_code_name']);
+//     }
 }

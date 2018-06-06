@@ -41,7 +41,7 @@ class StatusSearch extends Status
      */
     public function search($params)
     {
-    	$query = Status::find()->with('phuoc');
+    	$query = Status::find()->with('phuoc')->joinWith('phuoc');
 //     	->leftJoin('phuoc', ['phuoc.code' => 'decode'])
 //     	->where(['like', ]);
 
@@ -52,14 +52,14 @@ class StatusSearch extends Status
     		'pagination' => [
     			'pageSize' => 5
     		],
-            'sort' => [
-                'attributes' => ['id', 'message', 'permissions', 'created_at', 'updated_at', 'created_by', 'updated_by', 'de_code'],
-            ],
+//             'sort' => [
+//                 'attributes' => ['id', 'message', 'permissions', 'created_at', 'updated_at', 'created_by', 'updated_by', 'de_code'],
+//             ],
     	]);
+    	
 //     	if($this->de_code_name){
-//     		$query->with("code"=>[
-//     				"condition" => "Like "$this->de_code_name"
-//     		]);
+//     		$query->from('country')
+//     		->where(["condition" => 'like', $this->de_code_name]);
 //     	};
 
     	$this->load($params);
@@ -76,12 +76,14 @@ class StatusSearch extends Status
     		'permissions' => $this->permissions,
     		// 'created_at' => $this->created_at,
     		// 'updated_at' => $this->updated_at,
-            'de_code' => $this->de_code,
+			// 'de_code' => $this->de_code,
+//     		'country.name' => $this->de_code,
     	]);
 
     	$query->andFilterWhere(['like', 'message', $this->message]);
     	$query->andFilterWhere(['like', 'created_by', $this->created_by]);
     	$query->andFilterWhere(['like', 'updated_by', $this->updated_by]);
+    	$query->andFilterWhere(['like', 'country.name', $this->de_code]);
 
     	return $dataProvider;
     }
