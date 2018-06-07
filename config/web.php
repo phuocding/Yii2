@@ -56,17 +56,20 @@ $config = [
 						'rules' => [ 
 								'<controller:\w+>/<id:\w+>' => '<controller>/view',
 								'<controller:\w+>/<action:\w+>/<id:\w+>' => '<controller>/<action>',
+// 								'<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 								'' => '/site/index',
 								'login' => 'site/login',
 								'logout' => 'site/logout',
-								'hihi' => 'site/say',
-								'tingfu' => 'site/entry',
-								'about' => 'site/about',
-								'contact' => 'site/contact',
 								'population' => 'country/index',
 								'createCountry' => 'country/create',
 								'status' => 'status/index',
-								'createStatus' => 'status/create' 
+								'createStatus' => 'status/create',
+								'product' => 'products/index',
+								'addProduct' => 'products/create',
+								'category' => 'categories/index',
+								'addCate' => 'categories/create',
+								'property' => 'properties/index',
+								'addProp' => 'properties/create',
 						] 
 				] 
 		],

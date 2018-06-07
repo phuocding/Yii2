@@ -3,18 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Status;
-use app\models\StatusSearch;
+use app\models\Properties;
+use app\models\PropertiesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
-use app\models\Country;
 
 /**
- * StatusController implements the CRUD actions for Status model.
+ * PropertiesController implements the CRUD actions for Properties model.
  */
-class StatusController extends Controller
+class PropertiesController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -28,43 +26,17 @@ class StatusController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            // access control
-            'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'rules' => [
-            // allow authenticated users
-                [
-                    'actions' => ['index'],
-                    'allow' => true,
-                ],
-
-                [
-                		'actions' => ['create', 'update', 'view','delete'],
-                    'allow' => true,
-                    'roles' => ['@'],
-                ],
-        // everything else is defined
-                ],
-            ],
         ];
     }
 
     /**
-     * Lists all Status models.
+     * Lists all Properties models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new StatusSearch();
-
-        if (Yii::$app->request) {
-        	
-//         	if(Yii::$app->request->queryParams["de_code_name"] != ""){
-//         		$searchModel->de_code_name = Yii::$app->request->queryParams["de_code_name"];
-//         	}
-        	
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        }
+        $searchModel = new PropertiesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -73,7 +45,7 @@ class StatusController extends Controller
     }
 
     /**
-     * Displays a single Status model.
+     * Displays a single Properties model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -86,41 +58,25 @@ class StatusController extends Controller
     }
 
     /**
-     * Creates a new Status model.
+     * Creates a new Properties model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Status();
-        
-        //use app\models\Country;
-        $modelData = Country::find()->all();
-        
-        //use yii\helpers\ArrayHelper;
-        $listData = ArrayHelper::map($modelData, 'id', 'code');
-        
-        if ($model->load(Yii::$app->request->post())) {
-            // $model->created_by = Yii::$app->user->getId();
-            // $model->updated_by = Yii::$app->user->getId();
+        $model = new Properties();
 
-        	$model->created_at = date("y-m-d");
-        	$model->updated_at = date("y-m-d");
-
-            
-        	if ($model->save()) {
-        		return $this->redirect(['view', 'id' => $model->id]);
-        	}
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
-        	'listData' => $listData,
         ]);
     }
 
     /**
-     * Updates an existing Status model.
+     * Updates an existing Properties model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -129,12 +85,6 @@ class StatusController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        
-        //use app\models\Country;
-        $modelData = Country::find()->all();
-        
-        //use yii\helpers\ArrayHelper;
-        $listData = ArrayHelper::map($modelData, 'id', 'code');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -142,12 +92,11 @@ class StatusController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-        	'listData' => $listData,
         ]);
     }
 
     /**
-     * Deletes an existing Status model.
+     * Deletes an existing Properties model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -161,15 +110,15 @@ class StatusController extends Controller
     }
 
     /**
-     * Finds the Status model based on its primary key value.
+     * Finds the Properties model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Status the loaded model
+     * @return Properties the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Status::findOne($id)) !== null) {
+        if (($model = Properties::findOne($id)) !== null) {
             return $model;
         }
 

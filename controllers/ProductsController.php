@@ -3,18 +3,18 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Status;
-use app\models\StatusSearch;
+use app\models\Products;
+use app\models\ProductsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
-use app\models\Country;
+use app\models\Categories;
 
 /**
- * StatusController implements the CRUD actions for Status model.
+ * ProductsController implements the CRUD actions for Products model.
  */
-class StatusController extends Controller
+class ProductsController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -29,41 +29,36 @@ class StatusController extends Controller
                 ],
             ],
             // access control
-            'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'rules' => [
-            // allow authenticated users
-                [
-                    'actions' => ['index'],
-                    'allow' => true,
-                ],
-
-                [
-                		'actions' => ['create', 'update', 'view','delete'],
-                    'allow' => true,
-                    'roles' => ['@'],
-                ],
-        // everything else is defined
-                ],
-            ],
+        		'access' => [
+        				'class' => \yii\filters\AccessControl::className(),
+        				'rules' => [
+        						// allow authenticated users
+        						[
+        								'actions' => ['index'],
+        								'allow' => true,
+        						],
+        						
+        						[
+        								'actions' => ['create', 'update', 'view','delete'],
+        								'allow' => true,
+        								'roles' => ['@'],
+        						],
+        						// everything else is defined
+        				],
+        		],
         ];
     }
 
     /**
-     * Lists all Status models.
+     * Lists all Products models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new StatusSearch();
-
+        $searchModel = new ProductsSearch();
+        
         if (Yii::$app->request) {
-        	
-//         	if(Yii::$app->request->queryParams["de_code_name"] != ""){
-//         		$searchModel->de_code_name = Yii::$app->request->queryParams["de_code_name"];
-//         	}
-        	
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         }
 
         return $this->render('index', [
@@ -73,7 +68,7 @@ class StatusController extends Controller
     }
 
     /**
-     * Displays a single Status model.
+     * Displays a single Products model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -86,31 +81,22 @@ class StatusController extends Controller
     }
 
     /**
-     * Creates a new Status model.
+     * Creates a new Products model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Status();
+        $model = new Products();
         
         //use app\models\Country;
-        $modelData = Country::find()->all();
+        $modelData = Categories::find()->all();
         
         //use yii\helpers\ArrayHelper;
-        $listData = ArrayHelper::map($modelData, 'id', 'code');
-        
-        if ($model->load(Yii::$app->request->post())) {
-            // $model->created_by = Yii::$app->user->getId();
-            // $model->updated_by = Yii::$app->user->getId();
+        $listData = ArrayHelper::map($modelData, 'id', 'name');
 
-        	$model->created_at = date("y-m-d");
-        	$model->updated_at = date("y-m-d");
-
-            
-        	if ($model->save()) {
-        		return $this->redirect(['view', 'id' => $model->id]);
-        	}
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -120,7 +106,7 @@ class StatusController extends Controller
     }
 
     /**
-     * Updates an existing Status model.
+     * Updates an existing Products model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -131,10 +117,10 @@ class StatusController extends Controller
         $model = $this->findModel($id);
         
         //use app\models\Country;
-        $modelData = Country::find()->all();
+        $modelData = Categories::find()->all();
         
         //use yii\helpers\ArrayHelper;
-        $listData = ArrayHelper::map($modelData, 'id', 'code');
+        $listData = ArrayHelper::map($modelData, 'id', 'name');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -147,7 +133,7 @@ class StatusController extends Controller
     }
 
     /**
-     * Deletes an existing Status model.
+     * Deletes an existing Products model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -161,18 +147,19 @@ class StatusController extends Controller
     }
 
     /**
-     * Finds the Status model based on its primary key value.
+     * Finds the Products model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Status the loaded model
+     * @return Products the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Status::findOne($id)) !== null) {
+        if (($model = Products::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }

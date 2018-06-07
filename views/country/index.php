@@ -33,7 +33,7 @@ $this->params ['breadcrumbs'] [] = $this->title;
         [
             'attribute' => 'status',
             'value' => function($model) {
-            return ($model->statuses) ? implode(\yii\helpers\ArrayHelper::map($model->statuses, 'message', 'message'), " ") : 'NO MESSAGE';
+            return ($model->statuses) ? implode(\yii\helpers\ArrayHelper::getColumn($model->statuses, 'message', 'message'), " || ") : 'NO MESSAGE';
             }
         ],
     	['class' => 'yii\grid\ActionColumn'],

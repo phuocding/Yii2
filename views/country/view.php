@@ -31,7 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'code',
             'name',
             'population',
-            'status'
+//             'status'
+        		[
+        				'attribute' => 'status',
+        				'value' => function($model) {
+        				return ($model->statuses) ? implode(\yii\helpers\ArrayHelper::map($model->statuses, 'message', 'message'), " || ") : 'NO MESSAGE';
+        				}
+        				],
         ],
     ]) ?>
 
